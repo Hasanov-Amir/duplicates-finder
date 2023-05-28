@@ -1,0 +1,24 @@
+openapi: 3.0.0
+
+info:
+  title: Duplicates Finder
+  version: "1.0"
+  description: Finds duplicates in entered path
+
+paths:
+  /:
+    get:
+      operationId: controllers.index
+      responses:
+        200:
+          description: Renders HTML`
+          content:
+            text/html:
+              schema:
+                type: string
+  /find-duplicates:
+    post:
+      operationId: controllers.search
+      responses:
+        200:
+          description: Returns JSON object with list of duplicates

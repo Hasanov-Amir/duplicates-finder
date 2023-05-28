@@ -1,47 +1,21 @@
-import hashlib
-import os
-import sys
+import argparse
 
+from server import run_server
+from serverless import run_serverless
 
-def find_duplicate_files(path_to_folder):
-    hash_ls = {}
+parser = argparse.ArgumentParser(description="Finds file duplicates using hash.",
+                                 epilog="©Amir Hasanov all rights reserved")
 
-    for root, _, files in os.walk(path_to_folder):
-        for filename in files:
-            path_to_file = os.path.join(root, filename)
-            file_hash = calc_hash(path_to_file)
+parser.add_argument("-w", "--webui", action="store_true", help="Start webui (default on http://127.0.0.1:8080)")
+parser.add_argument("--host", default="127.0.0.1", help="Set custom host")
+parser.add_argument("--port", type=int, default=8080, help="Set custom port")
+parser.add_argument("--debug", action="store_true", help="Set debug parametr to True")
+parser.add_argument("-p", "--path", help="Set search path in cmd")
 
-            if file_hash in hash_ls:
-                hash_ls[file_hash].append(path_to_file)
-            else:
-                hash_ls[file_hash] = [path_to_file]
-
-    return {hash: files for hash, files in hash_ls.items() if len(files) > 1}
-
-
-def calc_hash(path_to_file):
-    with open(path_to_file, "rb") as f:
-        digest = hashlib.file_digest(f, "sha256")
-
-    return digest.hexdigest()
-
-
-if len(sys.argv) < 2:
-    print(f"Usage: python {os.path.basename(__file__)} directory")
-    sys.exit(1)
+args = parser.parse_args()
 
 if __name__ == "__main__":
-    directory_to_scan = sys.argv[1]
-    if not os.path.isdir(directory_to_scan):
-        print(f"There is not such dir: {directory_to_scan}")
-        sys.exit(1)
-
-    duplicates = find_duplicate_files(directory_to_scan)
-
-    for hash, files in duplicates.items():
-        print(f"\nFind duplicate hash: {hash}")
-        filename = os.path.basename(files[0])
-        print(f"filename: {filename}")
-
-        for file in files:
-            print(f"\t{file}")
+    if args.webui:
+        run_server(vars(args))
+    elif args.path:
+        run_serverless(args.path)
