@@ -1,0 +1,2 @@
+connexion[swagger-ui]==2.14.2
+argparse==1.4.0
