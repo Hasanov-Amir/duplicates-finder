@@ -1,5 +1,5 @@
-# duplicates-finder
-
+# Duplicaates finder
+```
 usage: main.py [-h] [-w] [--host HOST] [--port PORT] [--debug DEBUG] [-p PATH]
 
 Finds file duplicates using hash.
@@ -12,4 +12,5 @@ options:
   --debug DEBUG         Set debug parametr to True
   -p PATH, --path PATH  Set search path in cmd
 
-©Amir Hasanov all rights reserved
+© Amir Hasanov. All rights reserved.
+```
