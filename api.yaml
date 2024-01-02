@@ -1,9 +1,14 @@
 openapi: 3.0.0
 
+
 info:
   title: Duplicates Finder
-  version: "1.0"
+  version: "1.2"
   description: Finds duplicates in entered path
+
+servers:
+  - url: http://127.0.0.1:8080
+    description: local server only for development
 
 paths:
   /:
@@ -11,14 +16,56 @@ paths:
       operationId: controllers.index
       responses:
         200:
-          description: Renders HTML`
+          description: Renders HTML
           content:
             text/html:
               schema:
                 type: string
+
   /find-duplicates:
     post:
       operationId: controllers.search
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                path_to_folder:
+                  type: string
+              required:
+                - path_to_folder
+
       responses:
         200:
           description: Returns JSON object with list of duplicates
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  duplicates_percentage:
+                    type: number
+                  files_count:
+                    type: integer
+                  search_path:
+                    type: string
+                  spent_time:
+                    type: number
+                  total_duplicates_count:
+                    type: integer
+                  duplicates:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        duplicates_count:
+                          type: integer
+                        filename:
+                          type: string
+                        files:
+                          type: array
+                          items:
+                            type: string
+                        hash:
+                          type: string

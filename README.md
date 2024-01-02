@@ -1,4 +1,4 @@
-# Duplicaates finder
+# Duplicates finder
 ```
 usage: main.py [-h] [-w] [--host HOST] [--port PORT] [--debug DEBUG] [-p PATH]
 

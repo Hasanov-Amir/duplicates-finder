@@ -1,7 +1,6 @@
 from connexion import FlaskApp
 from flask_cors import CORS
 
-
 app = FlaskApp(__name__)
 app.add_api("api.yaml")
 CORS(app.app, resources={r"/find-duplicates": {"origins": "*"}})
